@@ -10,3 +10,5 @@ private.xml
 ant-deploy.xml
 build-impl.xml
 genfiles.properties
+
+**/classes/*
