@@ -22,7 +22,7 @@
                                 <label for="cpf">CPF</label>
                                 <input type="text" name="funcionario.cpf" value="${funcionario.cpf}" class="form-control input-sm" id="cpf" alt="cpf">
                                 <c:if test="${not empty errors.from('funcionario.cpf')}">
-                                    <span class="help-block">${errors.from('funcionario.cpf')}</span>
+                                    <span class="help-block" style="white-space: nowrap;">${errors.from('funcionario.cpf')}</span>
                                 </c:if>
                             </div>
                         </div>

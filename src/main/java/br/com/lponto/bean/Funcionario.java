@@ -2,6 +2,7 @@ package br.com.lponto.bean;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -73,6 +75,9 @@ public class Funcionario implements Serializable {
     @JoinColumn(name="id_setor", referencedColumnName="id")
     private Setor setor;
 
+    @OneToMany(mappedBy="funcionario")
+    private List<Ponto> registrosDePonto;
+
     //getters e setters
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
@@ -123,4 +128,7 @@ public class Funcionario implements Serializable {
         String[] s = nome.split(" ");
         return ((s.length > 2) ? s[0] + " " + s[s.length - 1] : nome);
     }
+
+    public List<Ponto> getRegistrosDePonto() { return registrosDePonto; }
+    public void setRegistrosDePonto(List<Ponto> registrosDePonto) { this.registrosDePonto = registrosDePonto; }
 }

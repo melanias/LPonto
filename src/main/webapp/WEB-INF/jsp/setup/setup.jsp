@@ -65,7 +65,7 @@
                             <label for="checkPassword">Confirmar a senha</label>
                             <input type="password" name="funcionario.checkPasswd" value="${funcionario.checkPasswd}" class="form-control input-sm" id="checkPassword" maxlength="30">
                             <c:if test="${not empty errors.from('funcionario.checkPasswd')}">
-                                <span class="help-block">${errors.from('funcionario.checkPasswd')}</span>
+                                <span class="help-block" style="white-space: nowrap;">${errors.from('funcionario.checkPasswd')}</span>
                             </c:if>
                         </div>
                     </div>
