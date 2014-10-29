@@ -1,4 +1,4 @@
-<%@ tag description="Template Principal da AplicaÃ§Ã£o" pageEncoding="UTF-8" %>
+<%@ tag description="Template Principal" pageEncoding="UTF-8" %>
 
 <%@ attribute name="title" required="true" %>
 
