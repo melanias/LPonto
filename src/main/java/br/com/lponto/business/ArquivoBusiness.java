@@ -1,11 +1,12 @@
 package br.com.lponto.business;
 
+import java.awt.image.BufferedImage;
+import java.nio.ByteBuffer;
+
 import br.com.caelum.vraptor.observer.download.Download;
 import br.com.caelum.vraptor.observer.upload.UploadedFile;
 
 import br.com.lponto.bean.Arquivo;
-import java.awt.image.BufferedImage;
-import java.nio.ByteBuffer;
 
 /**
  *

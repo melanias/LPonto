@@ -1,8 +1,13 @@
 package br.com.lponto.business.impl;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.ByteBuffer;
 
+import javax.imageio.ImageIO;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
@@ -13,11 +18,6 @@ import br.com.caelum.vraptor.observer.upload.UploadedFile;
 
 import br.com.lponto.bean.Arquivo;
 import br.com.lponto.business.ArquivoBusiness;
-import com.github.sarxos.webcam.Webcam;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.nio.ByteBuffer;
-import javax.imageio.ImageIO;
 
 /**
  *
@@ -25,8 +25,16 @@ import javax.imageio.ImageIO;
  */
 public class ArquivoBusinessImpl implements ArquivoBusiness {
 
-    private final HttpServletResponse response;
+    private HttpServletResponse response;
 
+    /**
+     * @deprecated CDI eyes only
+     */
+    protected ArquivoBusinessImpl() {
+        this(null);
+    }
+
+    @Inject
     public ArquivoBusinessImpl(HttpServletResponse response) {
         this.response = response;
     }

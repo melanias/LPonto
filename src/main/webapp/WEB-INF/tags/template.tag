@@ -1,4 +1,4 @@
-<%@ tag description="Template Principal da Aplicação" pageEncoding="UTF-8" %>
+<%@ tag description="Template Principal da AplicaÃ§Ã£o" pageEncoding="UTF-8" %>
 
 <%@ attribute name="title" required="true" %>
 
@@ -59,20 +59,22 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cadastros&nbsp;&nbsp;<span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <c:if test="${workerSession.perfil == 'ADMINISTRADOR'}">
-                                <li><a href="${linkTo[WorkerController].list}">Usuários</a></li>
+                                <li><a href="${linkTo[WorkerController].list}">Usu&aacute;rios</a></li>
                                 <li class="divider"></li>
                                 </c:if>
                                 <li><a href="${linkTo[SetorController].list}">Setores</a></li>
-                                <li><a href="${linkTo[FuncionarioController].list}">Funcionários</a></li>
+                                <li><a href="${linkTo[FuncionarioController].list}">Funcion&aacute;rios</a></li>
+                                <li class="divider"></li>
+                                <li><a href="${linkTo[PontoController].registerForm}">Registrar ponto</a></li>
                             </ul>
                         </li>
 
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Relatórios&nbsp;&nbsp;<span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Relat&oacute;rios&nbsp;&nbsp;<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="">Relatório 1</a></li>
-                                <li><a href="">Relatório 2</a></li>
-                                <li><a href="">Relatório 3</a></li>
+                                <li><a href="">Relat&oacute;rio 1</a></li>
+                                <li><a href="">Relat&oacute;rio 2</a></li>
+                                <li><a href="">Relat&oacute;rio 3</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -121,6 +123,9 @@
         <!-- DataTables -->
         <script src="${pageContext.request.contextPath}/datatables/dataTables.min.js"></script>
         <script src="${pageContext.request.contextPath}/datatables/dataTables.bootstrap.js"></script>
+
+        <!-- Holder.js -->
+        <script src="${pageContext.request.contextPath}/js/holder.js"></script>
 
         <!-- meioMask -->
         <script src="${pageContext.request.contextPath}/js/meiomask.js"></script>
