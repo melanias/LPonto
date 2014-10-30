@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,6 +16,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import br.com.lponto.enumeration.Register;
 
 /**
  *
@@ -33,6 +37,10 @@ public class Ponto extends Arquivo implements Serializable {
     @Column(nullable=false, updatable=false)
     private Date horario;
 
+    @Enumerated(EnumType.ORDINAL)
+    @Column(columnDefinition="smallint", nullable=false)
+    private Register tipo;
+
     @ManyToOne
     @JoinColumn(name="id_funcionario", referencedColumnName="id", nullable=false, updatable=false)
     private Funcionario funcionario;
@@ -43,6 +51,9 @@ public class Ponto extends Arquivo implements Serializable {
 
     public Date getHorario() { return horario; }
     public void setHorario(Date horario) { this.horario = horario; }
+
+    public Register getTipo() { return tipo; }
+    public void setTipo(Register tipo) { this.tipo = tipo; }
 
     public Funcionario getFuncionario() { return funcionario; }
     public void setFuncionario(Funcionario funcionario) { this.funcionario = funcionario; }

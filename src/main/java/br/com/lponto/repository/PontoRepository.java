@@ -1,5 +1,6 @@
 package br.com.lponto.repository;
 
+import br.com.lponto.bean.Funcionario;
 import br.com.lponto.bean.Ponto;
 
 /**
@@ -8,4 +9,5 @@ import br.com.lponto.bean.Ponto;
  */
 public interface PontoRepository extends Repository<Ponto, Long> {
 
+    Ponto getLatestRecord(Funcionario funcionario);
 }

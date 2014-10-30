@@ -17,6 +17,7 @@ import com.github.sarxos.webcam.util.ImageUtils;
 
 import br.com.lponto.bean.Funcionario;
 import br.com.lponto.bean.Ponto;
+import br.com.lponto.enumeration.Register;
 import br.com.lponto.repository.PontoRepository;
 import br.com.lponto.session.EmployeeSession;
 import br.com.lponto.session.PointSession;
@@ -73,6 +74,19 @@ public class PontoController extends MainController {
         Ponto ponto = new Ponto();
         ponto.setHorario(new Date());
         ponto.setFuncionario(employee);
+
+        //Definir tipo
+        Ponto latest = pontoRepository.getLatestRecord(employee);
+
+        if (latest == null) {
+            ponto.setTipo(Register.ENTRADA);
+        } else {
+            if (latest.getTipo().equals(Register.ENTRADA)) {
+                ponto.setTipo(Register.SAIDA);
+            } else {
+                ponto.setTipo(Register.ENTRADA);
+            }
+        }
 
         //Imagem do registro
         ponto.setFile(picture);
