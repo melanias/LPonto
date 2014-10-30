@@ -1,18 +1,26 @@
 package br.com.lponto.controller;
 
+import java.awt.Dimension;
+import java.util.Date;
+
+import javax.inject.Inject;
+import javax.transaction.Transactional;
+
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.validator.Validator;
+
+import com.github.sarxos.webcam.Webcam;
+import com.github.sarxos.webcam.util.ImageUtils;
+
+import br.com.lponto.bean.Funcionario;
 import br.com.lponto.bean.Ponto;
-import br.com.lponto.business.ArquivoBusiness;
+import br.com.lponto.repository.PontoRepository;
 import br.com.lponto.session.EmployeeSession;
 import br.com.lponto.session.PointSession;
-import com.github.sarxos.webcam.Webcam;
-import java.awt.image.BufferedImage;
-import java.nio.ByteBuffer;
-import javax.inject.Inject;
+import br.com.lponto.util.Utilities;
 
 /**
  *
@@ -25,7 +33,7 @@ public class PontoController extends MainController {
     private PointSession pointSession;
 
     @Inject
-    private ArquivoBusiness arquivoBusiness;
+    private PontoRepository pontoRepository;
 
     /**
      * @deprecated CDI eyes only
@@ -47,109 +55,67 @@ public class PontoController extends MainController {
     @Post("/ponto/register")
     public void addRegister() {
         Webcam webcam = Webcam.getDefault();
+
+        //Capturar imagem com resolução 320x240 se possível
+        if (isResolutionAvailable(320, 240, webcam.getViewSizes())) {
+            webcam.setViewSize(new Dimension(320, 240));
+        }
+
         webcam.open();
-        BufferedImage picture = webcam.getImage();
+        byte[] picture = ImageUtils.toByteArray(webcam.getImage(), ImageUtils.FORMAT_PNG);
         webcam.close();
 
+        //Funcionário
+        Funcionario employee = new Funcionario();
+        employee.setId(employeeSession.getId());
+
+        //Ponto
         Ponto ponto = new Ponto();
-        ponto.setFile(arquivoBusiness.convertBufferedImageToByteArray(picture));
+        ponto.setHorario(new Date());
+        ponto.setFuncionario(employee);
+
+        //Imagem do registro
+        ponto.setFile(picture);
         ponto.setMimeType("image/png");
+        ponto.setFileName(Utilities.md5(ponto.getHorario().toString()) +".png");
 
         pointSession.setPonto(ponto);
         result.redirectTo(this).registerForm();
     }
 
+    @Get("/ponto/cancel")
+    public void cancelRegister() {
+        //Limpar sessão
+        pointSession.setPonto(null);
+        result.redirectTo(this).registerForm();
+    }
+
+    @Transactional
     @Post("/ponto/confirm")
     public void confirmRegister() {
-        result.nothing();
+        //Salvar dados do registro de ponto do respectivo funcionário
+        pontoRepository.persist(pointSession.getPonto());
+        result.include("successMessage", "Registro de ponto efetuado com sucesso.");
+
+        //Limpar sessão
+        pointSession.setPonto(null);
+        result.redirectTo(this).registerForm();
+    }
+
+    private boolean isResolutionAvailable(int width, int height, Dimension[] viewSizes) {
+        boolean w = false,
+                h = false;
+
+        for (Dimension dimension : viewSizes) {
+            if (width == dimension.width) {
+                w = true;
+            }
+
+            if (height == dimension.height) {
+                h = true;
+            }
+        }
+
+        return w && h;
     }
 }
-
-/*
-
-    @Get("/funcionario")
-    public void list() {
-        result.include("title", "Funcionários");
-        result.include("addTitle", "Novo funcionário");
-        result.include("editTitle", "Editar funcionário");
-
-        //Funcionários
-        result.include("funcionarios", funcionarioRepository.listAllOrderByIdAsc());
-    }
-
-    @Get("/funcionario/add")
-    public void addForm() {
-        result.include("title", "Novo funcionário");
-
-        //Enumerations
-        result.include("roles", Role.getAll());
-        result.include("status", Status.getAll());
-
-        //Setores
-        result.include("setores", setorRepository.listAllOrderedByField("nome"));
-    }
-
-    @Transactional
-    @Post("/funcionario/add")
-    public void add(@Valid Funcionario funcionario) {
-        validator.onErrorRedirectTo(this).addForm();
-
-        //Definir data de cadastro
-        funcionario.setData(new Date());
-
-        //Definir e criptografar a senha
-        if (funcionario.getSenha() == null) {
-            funcionario.setSenha(Utilities.sha512(environment.get("passwd_default")));
-        } else {
-            funcionario.setSenha(Utilities.sha512(funcionario.getSenha()));
-        }
-
-        //Salvar funcionário
-        funcionarioRepository.persist(funcionario);
-        result.include("successMessage", "Funcionário cadastrado com sucesso.");
-
-        result.redirectTo(this).list();
-    }
-
-    @Get("/funcionario/edit/{id}")
-    public void editForm(Integer id) {
-        result.include("title", "Editar funcionário");
-        result.include("funcionario", funcionarioRepository.find(id));
-
-        //Enumerations
-        result.include("roles", Role.getAll());
-        result.include("status", Status.getAll());
-
-        //Setores
-        result.include("setores", setorRepository.listAllOrderedByField("nome"));
-    }
-
-    @Transactional
-    @Post("/funcionario/edit/{funcionario.id}")
-    public void edit(@Valid Funcionario funcionario) {
-        if (validator.hasErrors()) {
-            //Enumerations
-            result.include("roles", Role.getAll());
-            result.include("status", Status.getAll());
-
-            //Setores
-            result.include("setores", setorRepository.listAllOrderedByField("nome"));
-        }
-
-        validator.onErrorUsePageOf(this).editForm(funcionario.getId());
-
-        //Definir e criptografar a senha
-        if (funcionario.getSenha() == null) {
-            funcionario.setSenha(funcionarioRepository.find(funcionario.getId()).getSenha());
-        } else {
-            funcionario.setSenha(Utilities.sha512(funcionario.getSenha()));
-        }
-
-        //Salvar alterações
-        funcionarioRepository.merge(funcionario);
-        result.include("successMessage", "Funcionário atualizado com sucesso.");
-
-        result.redirectTo(this).list();
-    }
-
-*/

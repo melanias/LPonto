@@ -1,12 +1,8 @@
 package br.com.lponto.business.impl;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.ByteBuffer;
 
-import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 
@@ -73,35 +69,6 @@ public class ArquivoBusinessImpl implements ArquivoBusiness {
         try {
             return IOUtils.toByteArray(arquivo.getFile());
         } catch (IOException e) {
-            return null;
-        }
-    }
-
-    @Override
-    public byte[] convertByteBufferToByteArray(ByteBuffer imagem) {
-        if (imagem == null) { return null; }
-
-        byte[] picture = new byte[imagem.capacity()];
-        imagem.get(picture);
-
-        return picture;
-    }
-
-    @Override
-    public byte[] convertBufferedImageToByteArray(BufferedImage imagem) {
-        if (imagem == null) { return null; }
-
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-        try {
-            ImageIO.write(imagem, "png", baos);
-
-            baos.flush();
-            byte[] picture = baos.toByteArray();
-            baos.close();
-
-            return picture;
-        } catch (IOException ex) {
             return null;
         }
     }
