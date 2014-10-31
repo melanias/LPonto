@@ -10,6 +10,7 @@ import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.validator.SimpleMessage;
 import br.com.caelum.vraptor.validator.Validator;
 
 import com.github.sarxos.webcam.Webcam;
@@ -56,12 +57,17 @@ public class PontoController extends MainController {
         Funcionario funcionario = new Funcionario();
         funcionario.setId(employeeSession.getId());
 
+        result.include("webcam", Webcam.getDefault());
         result.include("records", pontoRepository.getAllRecordsOfTheDay(null, funcionario));
     }
 
     @Post("/ponto/register")
     public void addRegister() {
+        //Validar se existe alguma webcam
         Webcam webcam = Webcam.getDefault();
+
+        validator.addIf(webcam == null, new SimpleMessage("webcam", "Nenhum dispositivo de câmera disponível no momento."));
+        validator.onErrorRedirectTo(this).registerForm();
 
         //Capturar imagem com resolução 320x240 se possível
         if (isResolutionAvailable(320, 240, webcam.getViewSizes())) {

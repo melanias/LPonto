@@ -15,12 +15,15 @@
             <form action="${not empty pointSession.ponto ? linkTo[PontoController].confirmRegister : linkTo[PontoController].addRegister}" class="form-horizontal" method="post" role="form">
                 <br><br>
                 <div class="text-center">
-                    <img src="${not empty pointSession.ponto ? pointSession.ponto.encodeBase64 : ''}" data-src="holder.js/320x240/auto/text:Imagem" class="img-thumbnail img-responsive">
+                    <img src="${not empty pointSession.ponto ? pointSession.ponto.encodeBase64 : ''}" data-src="holder.js/320x240/auto/text:${empty webcam ? 'Câmera indisponível' : 'Imagem'}" class="img-thumbnail img-responsive">
                     <br><br>
                     <c:if test="${not empty pointSession.ponto}">
                         <a href="${linkTo[PontoController].cancelRegister}" class="btn btn-sm btn-danger" role="button">Cancelar</a>
                     </c:if>
-                    <button class="btn btn-sm btn-success" type="submit">${not empty pointSession.ponto ? 'Confirmar' : 'Registrar'}</button>
+                    <button class="btn btn-sm btn-success" type="submit"${empty webcam ? ' disabled' : ''}>${not empty pointSession.ponto ? 'Confirmar' : 'Registrar'}</button>
+                    <c:if test="${not empty errors.from('webcam')}">
+                        <p class="text-danger">${errors.from('webcam')}</p>
+                    </c:if>
                 </div>
             </form>
             <c:if test="${not empty records}">
