@@ -35,11 +35,11 @@ public class Ponto extends Arquivo implements Serializable {
 
     @Temporal(TemporalType.DATE)
     @Column(nullable=false, updatable=false)
-    private Date datar;
+    private Date toDate;
 
     @Temporal(TemporalType.TIME)
     @Column(nullable=false, updatable=false)
-    private Date hora;
+    private Date toTime;
 
     @Enumerated(EnumType.ORDINAL)
     @Column(columnDefinition="smallint", nullable=false)
@@ -53,11 +53,11 @@ public class Ponto extends Arquivo implements Serializable {
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    public Date getDatar() { return datar; }
-    public void setDatar(Date datar) { this.datar = datar; }
+    public Date getToDate() { return toDate; }
+    public void setToDate(Date toDate) { this.toDate = toDate; }
 
-    public Date getHora() { return hora; }
-    public void setHora(Date hora) { this.hora = hora; }
+    public Date getToTime() { return toTime; }
+    public void setToTime(Date toTime) { this.toTime = toTime; }
 
     public Register getTipo() { return tipo; }
     public void setTipo(Register tipo) { this.tipo = tipo; }

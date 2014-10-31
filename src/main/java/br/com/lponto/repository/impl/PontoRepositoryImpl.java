@@ -41,7 +41,7 @@ public class PontoRepositoryImpl extends GenericRepository<Ponto, Long> implemen
             Root<Ponto> root = c.from(Ponto.class);
             c.select(root);
 
-            Path<java.util.Date> horario = root.get(Ponto_.datar);
+            Path<java.util.Date> horario = root.get(Ponto_.toDate);
             Path<Funcionario> employee = root.get(Ponto_.funcionario);
 
             Predicate p1 = cb.equal(horario, sdf.parse(sdf.format(cal.getTime())));
@@ -77,7 +77,7 @@ public class PontoRepositoryImpl extends GenericRepository<Ponto, Long> implemen
             Root<Ponto> root = c.from(Ponto.class);
             c.select(root);
 
-            Path<java.util.Date> horario = root.get(Ponto_.datar);
+            Path<java.util.Date> horario = root.get(Ponto_.toDate);
             Path<Funcionario> employee = root.get(Ponto_.funcionario);
 
             Predicate p1 = cb.equal(horario, sdf.parse(sdf.format(data)));

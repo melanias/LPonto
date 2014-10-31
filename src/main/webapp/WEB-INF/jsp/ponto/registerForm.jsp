@@ -47,8 +47,8 @@
                             &nbsp;
                             <a href="#" data-toggle="popover" data-html="true" data-placement="top" data-content="<img src='${record.encodeBase64}' width='160' height='120'>"><span class="glyphicon glyphicon-picture"></span></a>
                         </td>
-                        <td><fmt:formatDate pattern="dd/MM/yyyy" value="${record.datar}" /></td>
-                        <td><fmt:formatDate pattern="HH:mm:ss" value="${record.hora}" /></td>
+                        <td><fmt:formatDate pattern="dd/MM/yyyy" value="${record.toDate}" /></td>
+                        <td><fmt:formatDate pattern="HH:mm:ss" value="${record.toTime}" /></td>
                         <td>${record.tipo}</td>
                     </tr>
                 </c:forEach>
