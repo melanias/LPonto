@@ -33,7 +33,8 @@
                     <tr>
                         <th>CPF</th>
                         <th>Nome</th>
-                        <th>Horário</th>
+                        <th>Data</th>
+                        <th>Hora</th>
                         <th>Tipo</th>
                     </tr>
                 </thead>
@@ -46,7 +47,8 @@
                             &nbsp;
                             <a href="#" data-toggle="popover" data-html="true" data-placement="top" data-content="<img src='${record.encodeBase64}' width='160' height='120'>"><span class="glyphicon glyphicon-picture"></span></a>
                         </td>
-                        <td><fmt:formatDate pattern="dd/MM/yyyy - HH:mm:ss" value="${record.horario}" /></td>
+                        <td><fmt:formatDate pattern="dd/MM/yyyy" value="${record.datar}" /></td>
+                        <td><fmt:formatDate pattern="HH:mm:ss" value="${record.hora}" /></td>
                         <td>${record.tipo}</td>
                     </tr>
                 </c:forEach>

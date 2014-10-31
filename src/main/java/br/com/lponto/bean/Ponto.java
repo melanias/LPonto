@@ -33,9 +33,13 @@ public class Ponto extends Arquivo implements Serializable {
     @GeneratedValue(generator="id_ponto_seq", strategy=GenerationType.AUTO)
     private Long id;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(nullable=false, updatable=false)
-    private Date horario;
+    private Date datar;
+
+    @Temporal(TemporalType.TIME)
+    @Column(nullable=false, updatable=false)
+    private Date hora;
 
     @Enumerated(EnumType.ORDINAL)
     @Column(columnDefinition="smallint", nullable=false)
@@ -49,8 +53,11 @@ public class Ponto extends Arquivo implements Serializable {
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    public Date getHorario() { return horario; }
-    public void setHorario(Date horario) { this.horario = horario; }
+    public Date getDatar() { return datar; }
+    public void setDatar(Date datar) { this.datar = datar; }
+
+    public Date getHora() { return hora; }
+    public void setHora(Date hora) { this.hora = hora; }
 
     public Register getTipo() { return tipo; }
     public void setTipo(Register tipo) { this.tipo = tipo; }

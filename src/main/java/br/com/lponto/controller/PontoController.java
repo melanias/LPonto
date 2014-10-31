@@ -84,7 +84,8 @@ public class PontoController extends MainController {
 
         //Ponto
         Ponto ponto = new Ponto();
-        ponto.setHorario(new Date());
+        ponto.setDatar(new Date());
+        ponto.setHora(new Date());
         ponto.setFuncionario(employee);
 
         //Definir tipo
@@ -103,7 +104,7 @@ public class PontoController extends MainController {
         //Imagem do registro
         ponto.setFile(picture);
         ponto.setMimeType("image/png");
-        ponto.setFileName(Utilities.md5(ponto.getHorario().toString()) +".png");
+        ponto.setFileName(Utilities.md5(ponto.getDatar().toString()) +".png");
 
         pointSession.setPonto(ponto);
         result.redirectTo(this).registerForm();
