@@ -65,7 +65,7 @@
                                 <li><a href="${linkTo[SetorController].list}">Setores</a></li>
                                 <li><a href="${linkTo[FuncionarioController].list}">Funcion&aacute;rios</a></li>
                                 <li class="divider"></li>
-                                <li><a href="${linkTo[PontoController].registerForm}">Registrar ponto</a></li>
+                                <li><a href="${linkTo[PontoController].registerForm}">Registro de Ponto</a></li>
                             </ul>
                         </li>
 
@@ -81,16 +81,6 @@
 
                     <c:if test="${not empty employeeSession}">
                     <ul class="nav navbar-nav navbar-right">
-                        <%--
-                        <c:choose>
-                            <c:when test="${not empty employeeSession.arquivo}">
-                                <li class="signed-in-with-image"><img src="${employeeSession.arquivo.encodeBase64}" alt="${employeeSession.arquivo.fileName}"></li>
-                            </c:when>
-                            <c:otherwise>
-                                <li class="signed-in-without-image"><span class="glyphicon glyphicon-user"></span></li>
-                            </c:otherwise>
-                        </c:choose>
-                        --%>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;&nbsp;${employeeSession.firstAndLastName}&nbsp;&nbsp;<span class="caret"></span></a>
                             <ul class="dropdown-menu">

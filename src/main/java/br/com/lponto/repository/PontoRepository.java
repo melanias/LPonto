@@ -1,5 +1,8 @@
 package br.com.lponto.repository;
 
+import java.util.Date;
+import java.util.List;
+
 import br.com.lponto.bean.Funcionario;
 import br.com.lponto.bean.Ponto;
 
@@ -10,4 +13,6 @@ import br.com.lponto.bean.Ponto;
 public interface PontoRepository extends Repository<Ponto, Long> {
 
     Ponto getLatestRecord(Funcionario funcionario);
+
+    List<Ponto> getAllRecordsOfTheDay(Date data, Funcionario funcionario);
 }

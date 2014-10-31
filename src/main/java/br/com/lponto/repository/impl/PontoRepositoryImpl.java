@@ -29,7 +29,7 @@ public class PontoRepositoryImpl extends GenericRepository<Ponto, Long> implemen
 
     @Override
     public Ponto getLatestRecord(Funcionario funcionario) {
-        Calendar calendar = Calendar.getInstance();
+        Calendar cal = Calendar.getInstance();
 
         //Formatar data atual
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
@@ -44,7 +44,7 @@ public class PontoRepositoryImpl extends GenericRepository<Ponto, Long> implemen
             Path<Date> horario = root.get("horario");
             Path<Funcionario> employee = root.get("funcionario");
 
-            Predicate p1 = cb.equal(horario, sdf.format(calendar.getTime()));
+            Predicate p1 = cb.equal(horario, sdf.format(cal.getTime()));
             Predicate p2 = cb.equal(employee, funcionario);
 
             List resultado = em.createQuery(c.where(p1).where(p2)).getResultList();
@@ -54,6 +54,36 @@ public class PontoRepositoryImpl extends GenericRepository<Ponto, Long> implemen
             } else {
                 return (Ponto) resultado.get(resultado.size()-1);
             }
+        } catch (Exception e) {
+            throw new RepositoryException(e);
+        }
+    }
+
+    @Override
+    public List<Ponto> getAllRecordsOfTheDay(java.util.Date data, Funcionario funcionario) {
+        if (data == null) {
+            //Definir data
+            Calendar cal = Calendar.getInstance();
+            data = cal.getTime();
+        }
+
+        //Formatar data atual
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Ponto> c = cb.createQuery(Ponto.class);
+
+            Root<Ponto> root = c.from(Ponto.class);
+            c.select(root);
+
+            Path<Date> horario = root.get("horario");
+            Path<Funcionario> employee = root.get("funcionario");
+
+            Predicate p1 = cb.equal(horario, sdf.format(data));
+            Predicate p2 = cb.equal(employee, funcionario);
+
+            return em.createQuery(c.where(p1).where(p2)).getResultList();
         } catch (Exception e) {
             throw new RepositoryException(e);
         }

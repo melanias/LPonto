@@ -50,7 +50,13 @@ public class PontoController extends MainController {
 
     @Get("/ponto/register")
     public void registerForm() {
-        result.include("title", "Registrar ponto");
+        result.include("title", "Registro de Ponto");
+
+        //Registros de ponto do funcionário logado
+        Funcionario funcionario = new Funcionario();
+        funcionario.setId(employeeSession.getId());
+
+        result.include("records", pontoRepository.getAllRecordsOfTheDay(null, funcionario));
     }
 
     @Post("/ponto/register")

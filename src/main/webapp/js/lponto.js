@@ -7,6 +7,10 @@ jQuery(function($){
     //Link ativo
     $('.navbar-nav a[href*="' + location.pathname.split("/")[2] + '"]').parent().addClass('active');
 
+    //Popover
+    $("body").popover({ trigger: "hover", selector: "a[data-toggle='popover']" });
+    //Popover
+
     //Tooltips
     $(document).tooltip({ selector: "a[title]", container: "body", placement: "left" });
     //Tooltips
