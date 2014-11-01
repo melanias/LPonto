@@ -13,6 +13,7 @@ import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.environment.Environment;
 import br.com.caelum.vraptor.validator.Validator;
 
+import br.com.lponto.annotations.Authorized;
 import br.com.lponto.bean.Funcionario;
 import br.com.lponto.enumeration.Role;
 import br.com.lponto.enumeration.Status;
@@ -25,6 +26,7 @@ import br.com.lponto.util.Utilities;
  * @author Phelipe Melanias
  */
 @Controller
+@Authorized(Role.GESTOR)
 public class FuncionarioController extends MainController {
 
     private final Environment environment;

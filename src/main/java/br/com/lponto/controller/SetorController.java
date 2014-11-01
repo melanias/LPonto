@@ -10,7 +10,9 @@ import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.validator.Validator;
 
+import br.com.lponto.annotations.Authorized;
 import br.com.lponto.bean.Setor;
+import br.com.lponto.enumeration.Role;
 import br.com.lponto.repository.SetorRepository;
 
 /**
@@ -18,6 +20,7 @@ import br.com.lponto.repository.SetorRepository;
  * @author Phelipe Melanias
  */
 @Controller
+@Authorized(Role.GESTOR)
 public class SetorController extends MainController {
 
     @Inject

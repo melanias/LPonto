@@ -17,7 +17,7 @@ import br.com.lponto.repository.FuncionarioRepository;
  *
  * @author Phelipe Melanias
  */
-@Intercepts(before=AuthInterceptor.class)
+@Intercepts(before={AuthInterceptor.class, AuthorizedInterceptor.class})
 public class SetupInterceptor {
 
     @Inject private Result result;

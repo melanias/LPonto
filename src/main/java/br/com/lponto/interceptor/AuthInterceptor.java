@@ -17,7 +17,7 @@ import br.com.lponto.session.EmployeeSession;
  *
  * @author Phelipe Melanias
  */
-@Intercepts//(before = AuthorizedInterceptor.class)
+@Intercepts(before=AuthorizedInterceptor.class)
 public class AuthInterceptor {
 
     @Inject private Result result;

@@ -58,13 +58,11 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cadastros&nbsp;&nbsp;<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <c:if test="${workerSession.perfil == 'ADMINISTRADOR'}">
-                                <li><a href="${linkTo[WorkerController].list}">Usu&aacute;rios</a></li>
-                                <li class="divider"></li>
-                                </c:if>
+                                <c:if test="${employeeSession.perfil == 'GESTOR' || employeeSession.perfil == 'ADMINISTRADOR'}">
                                 <li><a href="${linkTo[SetorController].list}">Setores</a></li>
                                 <li><a href="${linkTo[FuncionarioController].list}">Funcion&aacute;rios</a></li>
                                 <li class="divider"></li>
+                                </c:if>
                                 <li><a href="${linkTo[PontoController].registerForm}">Registro de Ponto</a></li>
                             </ul>
                         </li>
