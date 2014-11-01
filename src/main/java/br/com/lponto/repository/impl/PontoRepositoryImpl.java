@@ -60,6 +60,21 @@ public class PontoRepositoryImpl extends GenericRepository<Ponto, Long> implemen
     }
 
     @Override
+    public List<Ponto> getAllRecordsOf(Funcionario funcionario) {
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Ponto> c = cb.createQuery(Ponto.class);
+
+            Root<Ponto> root = c.from(Ponto.class);
+            c.select(root);
+
+            return em.createQuery(c.where(cb.equal(root.get(Ponto_.funcionario), funcionario))).getResultList();
+        } catch (Exception e) {
+            throw new RepositoryException(e);
+        }
+    }
+
+    @Override
     public List<Ponto> getAllRecordsOfTheDay(java.util.Date data, Funcionario funcionario) {
         if (data == null) {
             //Definir data
@@ -88,4 +103,6 @@ public class PontoRepositoryImpl extends GenericRepository<Ponto, Long> implemen
             throw new RepositoryException(e);
         }
     }
+
+
 }

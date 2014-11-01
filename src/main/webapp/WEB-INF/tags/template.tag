@@ -55,15 +55,12 @@
 
                 <div class="collapse navbar-collapse navbar-responsive-collapse">
                     <ul class="nav navbar-nav">
+                        <c:if test="${employeeSession.perfil == 'GESTOR' || employeeSession.perfil == 'ADMINISTRADOR'}">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cadastros&nbsp;&nbsp;<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <c:if test="${employeeSession.perfil == 'GESTOR' || employeeSession.perfil == 'ADMINISTRADOR'}">
                                 <li><a href="${linkTo[SetorController].list}">Setores</a></li>
                                 <li><a href="${linkTo[FuncionarioController].list}">Funcion&aacute;rios</a></li>
-                                <li class="divider"></li>
-                                </c:if>
-                                <li><a href="${linkTo[PontoController].registerForm}">Registro de Ponto</a></li>
                             </ul>
                         </li>
 
@@ -75,6 +72,9 @@
                                 <li><a href="">Relat&oacute;rio 3</a></li>
                             </ul>
                         </li>
+                        </c:if>
+
+                        <li><a href="${linkTo[PontoController].list}">Registro de Ponto</a></li>
                     </ul>
 
                     <c:if test="${not empty employeeSession}">

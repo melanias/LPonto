@@ -49,16 +49,28 @@ public class PontoController extends MainController {
         super(result, validator, employeeSession);
     }
 
+    @Get("/ponto")
+    public void list() {
+        result.include("title", "Ponto");
+        result.include("subTitle", "Meus registros de ponto");
+        result.include("addTitle", "Registro de ponto");
+
+        //Registros de ponto do funcionário
+        Funcionario funcionario = new Funcionario();
+        funcionario.setId(employeeSession.getId());
+
+        result.include("records", pontoRepository.getAllRecordsOf(funcionario));
+    }
+
     @Get("/ponto/register")
     public void registerForm() {
-        result.include("title", "Registro de Ponto");
+        result.include("title", "Registro de ponto");
 
-        //Registros de ponto do funcionário logado
+        //Registros de ponto do funcionário
         Funcionario funcionario = new Funcionario();
         funcionario.setId(employeeSession.getId());
 
         result.include("webcam", Webcam.getDefault());
-        result.include("records", pontoRepository.getAllRecordsOfTheDay(null, funcionario));
     }
 
     @Post("/ponto/register")
@@ -126,7 +138,7 @@ public class PontoController extends MainController {
 
         //Limpar sessão
         pointSession.setPonto(null);
-        result.redirectTo(this).registerForm();
+        result.redirectTo(this).list();
     }
 
     private boolean isResolutionAvailable(int width, int height, Dimension[] viewSizes) {

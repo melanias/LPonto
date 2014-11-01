@@ -19,7 +19,6 @@ public class EmployeeSession implements Serializable {
 
     private Funcionario funcionario;
 
-
     //Login and logout actions
     public void logout() { this.funcionario = null; }
     public boolean isLoggedIn() { return funcionario != null; }

@@ -14,5 +14,6 @@ public interface PontoRepository extends Repository<Ponto, Long> {
 
     Ponto getLatestRecord(Funcionario funcionario);
 
+    List<Ponto> getAllRecordsOf(Funcionario funcionario);
     List<Ponto> getAllRecordsOfTheDay(Date data, Funcionario funcionario);
 }
